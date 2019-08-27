@@ -6,6 +6,7 @@ import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  * Created by rajeevkumarsingh on 24/07/17.
@@ -15,9 +16,10 @@ public class ChatController {
 
     @MessageMapping("/chat.sendMessage")
     @SendTo("/topic/public")
-    public ChatMessage sendMessage(@Payload ChatMessage chatMessage) {
+    public ChatMessage sendMessage( ChatMessage chatMessage) { //Payload 有效载荷的意思，便于理解
         return chatMessage;
     }
+//@Payload
 
     @MessageMapping("/chat.addUser")
     @SendTo("/topic/public")
@@ -26,6 +28,24 @@ public class ChatController {
         // Add username in web socket session
         headerAccessor.getSessionAttributes().put("username", chatMessage.getSender());
         return chatMessage;
+    }
+    @RequestMapping("/manyman")
+    public String manyman(){
+        return "index";
+    }
+    @RequestMapping("/onetoone")
+    public String onetoone(){
+        return "OneToOne";
+    }
+
+    @RequestMapping("/baiduYunPan")
+    public String baiduYunPan(){
+        return "baiduYunPan";
+    }
+
+    @RequestMapping("/")
+    public String home(){
+        return "home";
     }
 
 }

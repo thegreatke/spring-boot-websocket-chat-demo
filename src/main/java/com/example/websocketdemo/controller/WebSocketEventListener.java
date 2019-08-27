@@ -17,12 +17,12 @@ import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 @Component
 public class WebSocketEventListener {
 
-    private static final Logger logger = LoggerFactory.getLogger(WebSocketEventListener.class);
+    private static final Logger logger = LoggerFactory.getLogger(WebSocketEventListener.class); //log record
 
     @Autowired
-    private SimpMessageSendingOperations messagingTemplate;
+    private SimpMessageSendingOperations messagingTemplate;//可以实现自由的向任意目的地发送消息，并且订阅此目的地的所有用户都能收到消息。
 
-    @EventListener
+    @EventListener   //自定义的事件监听
     public void handleWebSocketConnectListener(SessionConnectedEvent event) {
         logger.info("Received a new web socket connection");
     }

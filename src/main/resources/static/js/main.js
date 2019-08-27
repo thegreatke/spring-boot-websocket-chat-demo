@@ -1,11 +1,11 @@
-'use strict';
+'use strict';   //使用JS的严格模式
 
-var usernamePage = document.querySelector('#username-page');
+var usernamePage = document.querySelector('#username-page');//HTML 的DOM querySelector()方法可以不需要额外的jQuery等支持，也可以方便的获取DOM元素，
 var chatPage = document.querySelector('#chat-page');
 var usernameForm = document.querySelector('#usernameForm');
 var messageForm = document.querySelector('#messageForm');
-var messageInput = document.querySelector('#message');
-var messageArea = document.querySelector('#messageArea');
+var messageInput = document.querySelector('#message');//输入框的发送文本
+var messageArea = document.querySelector('#messageArea');//消息框的两种消息：系统通知and聊天信息
 var connectingElement = document.querySelector('.connecting');
 
 var stompClient = null;
@@ -17,11 +17,11 @@ var colors = [
 ];
 
 function connect(event) {
-    username = document.querySelector('#name').value.trim();
+    username = document.querySelector('#name').value.trim();//trim意思是去除字段两边多余的空格
 
     if(username) {
-        usernamePage.classList.add('hidden');
-        chatPage.classList.remove('hidden');
+        usernamePage.classList.add('hidden');    //隐藏了名字的页面
+        chatPage.classList.remove('hidden');//显示聊天的界面
 
         var socket = new SockJS('/ws');
         stompClient = Stomp.over(socket);
@@ -74,14 +74,14 @@ function onMessageReceived(payload) {
 
     var messageElement = document.createElement('li');
 
-    if(message.type === 'JOIN') {
+    if(message.type === 'JOIN') {                       //join info
         messageElement.classList.add('event-message');
         message.content = message.sender + ' joined!';
-    } else if (message.type === 'LEAVE') {
+    } else if (message.type === 'LEAVE') {              //left info
         messageElement.classList.add('event-message');
         message.content = message.sender + ' left!';
     } else {
-        messageElement.classList.add('chat-message');
+        messageElement.classList.add('chat-message');   //chat info
 
         var avatarElement = document.createElement('i');
         var avatarText = document.createTextNode(message.sender[0]);
@@ -117,5 +117,5 @@ function getAvatarColor(messageSender) {
     return colors[index];
 }
 
-usernameForm.addEventListener('submit', connect, true)
-messageForm.addEventListener('submit', sendMessage, true)
+usernameForm.addEventListener('submit', connect, true)//为两个表单提交添加监听的事件
+messageForm.addEventListener('submit', sendMessage, true)//发送聊天框的表单监听
